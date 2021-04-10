@@ -1,0 +1,40 @@
+<html>
+<body text="#1F497D">
+Hi,
+<br><br>
+Please review the attached invoice and provide your email approval for processing if such services have been received against this invoice.  
+<br><br>
+If you approve this invoice, please note that the existing PO is short funds of $#amount#.  Please add  
+<br>
+funds to the below PO, by raising a new PR in Oracle, referencing the existing PO and email the new 
+<br>
+PO number to AP team.  The AP team is unable to match the invoice to the PO, and pay the vendor, 
+<br>
+without adding these funds.
+<br><br>
+Funds available in PO: $#fundsavailable#
+<br><br>
+Invoice details:<br><br>
+<table border="1" cellspacing="0" cellpadding="1" style="margin-left:50px;width:450px">
+<tr>
+	<th style="background:lightblue">Invoice Date</th>
+	<th style="background:lightblue">Invoice Number</th>
+	<th style="background:lightblue">Vendor</th>
+	<th style="background:lightblue">Amount</th>
+	<th style="background:lightblue">PO Number</th>
+</tr>
+<tr>
+	<td>#invdate#</td>
+	<td>#invnum#</td>
+	<td>#vendor#</td>
+	<td>#amount1#</td>
+	<td>#ponum#</td>
+</tr>
+</table>
+<br><br>
+Note: This is an auto generated email. Please do not reply to this message. For further assistance please contact AP@enphaseenergy.com
+<br><br>
+Regards,<br>
+ AP Team
+</body>
+</html>

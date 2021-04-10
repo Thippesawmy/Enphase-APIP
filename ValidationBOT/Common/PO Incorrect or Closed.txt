@@ -1,0 +1,41 @@
+<html>
+<body text="#1F497D">
+Hi,
+<br><br>
+Please review the attached invoice and provide your email approval for processing if such services 
+<br>
+have been received against this invoice
+<br><br>
+Also, kindly share by email the PO number to match the invoice to. As per our oracle records, the PO 
+<br> 
+referenced on the invoice is Incorrect/Closed. AP team is unable to pay the vendor without matching  
+<br>
+the Invoice to a valid PO in Oracle. If there are additional invoices related to the same PO number, 
+<br>
+please inform the vendor that the PO number must be referenced on the invoice copy for AP Team to process and pay.
+
+<br><br>
+Invoice details:<br><br>
+<table border="1" cellspacing="0" cellpadding="1" style="margin-left:50px;width:450px">
+<tr>
+	<th style="background:lightblue">Invoice Date</th>
+	<th style="background:lightblue">Invoice Number</th>
+	<th style="background:lightblue">Vendor</th>
+	<th style="background:lightblue">Amount</th>
+	<th style="background:lightblue">PO Number</th>
+</tr>
+<tr>
+	<td>#invdate#</td>
+	<td>#invnum#</td>
+	<td>#vendor#</td>
+	<td>#amount#</td>
+	<td>#ponum#</td>
+</tr>
+</table>
+<br><br>
+Note: This is an auto generated email. Please do not reply to this message. For further assistance please contact AP@enphaseenergy.com
+<br><br>
+Regards,<br>
+AP Team
+</body>
+</html>

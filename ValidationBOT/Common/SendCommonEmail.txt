@@ -1,0 +1,29 @@
+<html>
+<body text="#1F497D">
+Hi,
+<br><br>
+
+Please find below Invoice details:<br><br>
+<table border="1" cellspacing="0" cellpadding="1" style="margin-left:50px;width:450px">
+<tr>
+	<th style="background:lightblue">Invoice Date</th>
+	<th style="background:lightblue">Invoice Number</th>
+	<th style="background:lightblue">Vendor</th>
+	<th style="background:lightblue">Amount</th>
+	<th style="background:lightblue">PO Number</th>
+</tr>
+<tr>
+	<td>#invdate#</td>
+	<td>#invnum#</td>
+	<td>#vendor#</td>
+	<td>#amount#</td>
+	<td>#ponum#</td>
+</tr>
+</table>
+<br><br>
+Disclaimer: This is an auto generated mail. Incase of any questions, clarifications please reach out to ap@enphaseenergy.com .
+<br><br>
+Regards,<br>
+Enphase AP Bot
+</body>
+</html>

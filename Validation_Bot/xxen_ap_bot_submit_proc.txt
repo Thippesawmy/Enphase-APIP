@@ -1,0 +1,64 @@
+create or replace procedure xxen_ap_bot_submit_proc(
+p_user_id in number,
+p_resp_id in number,
+p_appl_id in number,
+p_req_id  out number,
+p_phase   out varchar2,
+p_status  out varchar2,
+p_message out varchar2
+)
+as
+   l_request_id number := 0;
+   l_phase          VARCHAR2 (100);
+   l_status         VARCHAR2 (100);
+   l_dev_phase      VARCHAR2 (100);
+   l_dev_status     VARCHAR2 (100);
+   l_message        VARCHAR2 (100);
+   l_cp_status      BOOLEAN;
+begin
+/*fnd_global.apps_initialize (
+      user_id             => fnd_profile.VALUE ('USER_ID'),--8842
+      resp_id             => fnd_profile.VALUE ('RESP_ID'),--51336
+      resp_appl_id        => fnd_profile.VALUE ('RESP_APPL_ID'),--200
+      security_group_id   => 0);*/
+      
+      fnd_global.apps_initialize (
+      user_id             => p_user_id,
+      resp_id             => p_resp_id,
+      resp_appl_id        => p_appl_id,
+      security_group_id   => 0);
+      
+  
+        l_request_id := fnd_request.submit_request ( 
+                            application   => 'SQLAP', 
+                            program       => 'XXEN_AP_INV_VALIDATIONS_BOT',
+                            description   =>  NULL,                    
+                            start_time    => sysdate, 
+                            sub_request   => FALSE);  
+        COMMIT;
+        
+        p_req_id := l_request_id;
+        
+        if l_request_id <> 0 then
+        
+         l_cp_status := fnd_concurrent.wait_for_request(request_id  => l_request_id,
+                                             INTERVAL        => 5,
+                                             max_wait        => null,
+                                             phase           => l_phase,
+                                             status          => l_status,
+                                             dev_phase       => l_dev_phase,
+                                             dev_status      => l_dev_status,
+                                             MESSAGE         => l_message
+                                            );
+                                            
+                                            p_status  := l_dev_status;
+                                            p_phase   := l_dev_phase;
+                                            p_message := l_message;
+                     else
+                     
+                     p_message := 'Concurrent not submitted';
+                     end if;
+                     
+        exception when others then 
+        p_message := sqlerrm;
+    end;

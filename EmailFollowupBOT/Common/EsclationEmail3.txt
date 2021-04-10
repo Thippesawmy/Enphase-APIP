@@ -1,0 +1,21 @@
+<html>
+<body text="#1F497D">
+Dear Department Head,
+<br><br>
+We have not received any response from the requestor despite several follow ups so your assistance is required for us to process the <br>
+invoice and release payment.
+<br><br>
+Please review the attached invoice and click the "Approved" hyperlink if such services have been received against this invoice. A new <br>
+email window will open then press "Send" button. Do not include additional text in the response or the invoice will not be immediately <br>
+processed and will be routed to the Accounts Payable team for investigation. If you do not approve the invoice, click the "Rejected" <br>
+hyperlink. In the response email you can give clarification why the invoice was rejected for the Accounts Payable team's investigation
+<br><br>
+<a href="mailto:#Robot_ID#?cc=#Reque_ID#&Subject=#subject#&body=Approved" style="font-size:18px">Approved</a>   &nbsp&nbsp&nbsp&nbsp||&nbsp&nbsp&nbsp&nbsp
+<a href="mailto:#Robot_ID#?cc=#Reque_ID#&Subject=#subject#&body=Rejected" style="font-size:18px">Rejected</a>
+<br><br>
+Thank you in advance for expediting your action.
+<br><br>
+Regards,<br>
+AP Team
+</body>
+</html>

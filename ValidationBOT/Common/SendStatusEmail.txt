@@ -1,0 +1,73 @@
+<html>
+<body text="#1F497D">
+Hi,
+<br><br>
+Please find below status
+<br>
+Invoice details:<br><br><br>
+<table border="1" cellspacing="0" cellpadding="1" style="margin-left:50px;width:250px">
+<tr>
+	<th style="background:lightblue">Email</th>
+	<th style="background:lightblue">Count</th>
+</tr>
+<tr>
+	<td>PO Approval</td>
+	<td>#popappr#</td>
+</tr>
+<tr>
+	<td>Invoice Load Results</td>
+	<td>#invload#</td>
+</tr>
+<tr>
+	<td>SUPPLIER INVALID</td>
+	<td>#suppinv#</td>
+</tr>
+<tr>
+	<td>PO NOT FOUND/INVALID</td>
+	<td>#ponotfound#</td>
+</tr>
+<tr>
+	<td>SUPPLIER/SITE DECODE FAILED</td>
+	<td>#suppdecode#</td>
+</tr>
+<tr>
+	<td>INVOICE NUMBER ALREADY EXIST</td>
+	<td>#invexist#</td>
+</tr>
+<tr>
+	<td>PO FUNDS CHECK FAILED</td>
+	<td>#pofunds#</td>
+</tr>
+<tr>
+	<td>ITEM DECODE FAILED</td>
+	<td>#itemdecode#</td>
+</tr>
+<tr>
+	<td>RG NOT FOUND</td>
+	<td>#rgnotfound#</td>
+</tr>
+<tr>
+	<td>RG DECODE FAILED</td>
+	<td>#rgdecode#</td>
+</tr>
+<tr>
+	<td>QUANTITY OVER BILLED</td>
+	<td>#qtyoverbilled#</td>
+</tr>
+<tr>
+	<td>PRICE OVER BILLED</td>
+	<td>#priceover#</td>
+</tr>
+</tr>
+<tr>
+	<td>INVALID MATCH OPTION</td>
+	<td>#invalidmatch#</td>
+</tr>
+</table>
+<br><br>
+Disclaimer: This is an auto generated mail. Incase of any questions, clarifications please reach out to ap@enphaseenergy.com .
+<br><br>
+Regards,<br>
+Enphase AP Bot
+</body>
+</html>

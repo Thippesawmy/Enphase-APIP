@@ -1,0 +1,41 @@
+<html>
+<body text="#1F497D">
+Hi,
+<br><br>
+Please find below status
+<br><br>
+<table border="1" cellspacing="0" cellpadding="1" style="margin-left:50px;width:250px">
+<tr>
+	<th style="background:lightblue">Items</th>
+	<th style="background:lightblue">Count</th>
+</tr>
+<tr>
+	<td>Approval Received</td>
+	<td>#apprec#</td>
+</tr>
+<tr>
+	<td>Approval Pending </td>
+	<td>#apppen#</td>
+</tr>
+<tr>
+	<td>Esclation1</td>
+	<td>#esc1#</td>
+</tr>
+
+<tr>
+	<td>Esclation2</td>
+	<td>#esc2#</td>
+</tr>
+
+<tr>
+	<td>Esclation3</td>
+	<td>#esc3#</td>
+</tr>
+</table>
+<br><br>
+Disclaimer: This is an auto generated mail. Incase of any questions, clarifications please reach out to ap@enphaseenergy.com .
+<br><br>
+Regards,<br>
+Enphase AP Bot
+</body>
+</html>

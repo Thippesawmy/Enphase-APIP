@@ -1,0 +1,673 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(sd:DataRow)" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="Exldbcon" Type="InArgument(ui:DatabaseConnection)" />
+    <x:Property Name="io_ApproalReceived" Type="InOutArgument(x:Int32)" />
+    <x:Property Name="io_ApprovalPending" Type="InOutArgument(x:Int32)" />
+    <x:Property Name="io_Esclation1" Type="InOutArgument(x:Int32)" />
+    <x:Property Name="io_Esclation2" Type="InOutArgument(x:Int32)" />
+    <x:Property Name="io_Esclation3" Type="InOutArgument(x:Int32)" />
+    <x:Property Name="In_POTrackerfile_Path" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>2793.6,3804.8</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="76">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Database</x:String>
+      <x:String>Microsoft.Exchange.WebServices.Data</x:String>
+      <x:String>UiPath.Mail.Exchange.Activities</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>UiPath.Mail</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>UiPath.Mail.Outlook.Activities</x:String>
+      <x:String>UiPath.Mail.Activities</x:String>
+      <x:String>UiPath.Database.Activities</x:String>
+      <x:String>UiPath.Mail.SMTP.Activities</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>System.Globalization</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>System.Net</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="30">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Database</AssemblyReference>
+      <AssemblyReference>Microsoft.Exchange.WebServices</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.CV.Activities</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldCollapseAll">False</x:Boolean>
+    </scg:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="2804,3740" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="InvoiceNumber" />
+      <Variable x:TypeArguments="scg:List(snm:MailMessage)" Name="EmailList" />
+      <Variable x:TypeArguments="s:DateTime" Name="SendDate" />
+      <Variable x:TypeArguments="x:Int32" Name="TotalDays" />
+      <Variable x:TypeArguments="x:String" Name="SenderEmail" />
+      <Variable x:TypeArguments="x:String" Name="ReceivedDate" />
+      <Variable x:TypeArguments="x:String" Name="EmailPath" />
+      <Variable x:TypeArguments="x:Int32" Name="FirstEsclation" />
+      <Variable x:TypeArguments="x:Int32" Name="SecondEsclation" />
+      <Variable x:TypeArguments="x:Int32" Name="ThirdEsclation" />
+      <Variable x:TypeArguments="x:String" Name="PONumber" />
+      <Variable x:TypeArguments="ui:DatabaseConnection" Name="outExclDbcon" />
+      <Variable x:TypeArguments="x:Boolean" Name="Formate_Complete" />
+      <Variable x:TypeArguments="x:String" Name="Sub_line" />
+      <Variable x:TypeArguments="x:String" Name="Email_ID" />
+      <Variable x:TypeArguments="x:String" Name="AP_UserID" />
+      <Variable x:TypeArguments="ss:SecureString" Name="AP_Password" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:Comment DisplayName="Comment (placeholder)" sap:VirtualizedContainerService.HintSize="2762.4,56" sap2010:WorkflowViewState.IdRef="Comment_1" Text="//  Invoke steps of the process" />
+    <ui:GetRobotCredential TimeoutMS="{x:Null}" AssetName="[in_Config(&quot;AP_Mail_Credentials&quot;).ToString]" DisplayName="Get Credential" sap:VirtualizedContainerService.HintSize="2762.4,22.4" sap2010:WorkflowViewState.IdRef="GetRobotCredential_1" Password="[AP_Password]" Username="[AP_UserID]" />
+    <Assign DisplayName="Assign - Invoice Number" sap:VirtualizedContainerService.HintSize="2762.4,60" sap2010:WorkflowViewState.IdRef="Assign_84">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[InvoiceNumber]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[in_TransactionItem("INVOICE_NUMBER").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign DisplayName="Assign - PONumber" sap:VirtualizedContainerService.HintSize="2762.4,60" sap2010:WorkflowViewState.IdRef="Assign_99">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[PONumber]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[in_TransactionItem("PO_NUMBER").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign DisplayName="Assign - Send Date" sap:VirtualizedContainerService.HintSize="2762.4,60" sap2010:WorkflowViewState.IdRef="Assign_93">
+      <Assign.To>
+        <OutArgument x:TypeArguments="s:DateTime">[SendDate]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="s:DateTime">[Convert.ToDateTime(in_TransactionItem("SENT_DATE").ToString)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="2762.4,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="241.6,115.2" sap2010:WorkflowViewState.IdRef="Sequence_26">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:GetOutlookMailMessages Account="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Get Outlook Mail Messages - Filter Invoice Number" Filter="[&quot;@SQL=urn:schemas:httpmail:subject LIKE '%&quot;+InvoiceNumber+&quot;%'&quot;]" GetAttachements="False" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="GetOutlookMailMessages_1" MailFolder="Inbox\Approved Mails" MarkAsRead="True" Messages="[EmailList]" OnlyUnreadMessages="True" Top="100" />
+        </Sequence>
+      </ui:CommentOut.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:CommentOut>
+    <ui:GetExchangeMailMessages Domain="{x:Null}" EmailAutodiscover="{x:Null}" SharedMailbox="{x:Null}" TimeoutMS="{x:Null}" CustomFolder="Inbox\Approved Mails" DisplayName="Get Exchange Mail Messages" ExchangeVersion="Exchange2007_SP1" GetAttachements="False" sap:VirtualizedContainerService.HintSize="2762.4,22.4" sap2010:WorkflowViewState.IdRef="GetExchangeMailMessages_1" IsBodyHtml="False" MailFolder="Calendar" MarkAsRead="True" Messages="[EmailList]" OnlyUnreadMessages="True" Password="[new System.Net.NetworkCredential(string.Empty, AP_Password).Password]" Server="https://outlook.office365.com/" Top="100" User="[AP_UserID]" />
+    <If Condition="[EmailList.Count&gt;0]" DisplayName="if - Check Email Count" sap:VirtualizedContainerService.HintSize="2762.4,2957.6" sap2010:WorkflowViewState.IdRef="If_8">
+      <If.Then>
+        <ui:ForEach x:TypeArguments="snm:MailMessage" CurrentIndex="{x:Null}" DisplayName="For Each - Loop Email" sap:VirtualizedContainerService.HintSize="596,1737.6" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[EmailList]">
+          <ui:ForEach.Body>
+            <ActivityAction x:TypeArguments="snm:MailMessage">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="snm:MailMessage" Name="email" />
+              </ActivityAction.Argument>
+              <Sequence sap:VirtualizedContainerService.HintSize="560.8,1603.2" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="x:String" Name="Mail_Body" />
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="519.2,60" sap2010:WorkflowViewState.IdRef="Assign_112">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[Mail_Body]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[email.body.ToString]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <If Condition="[email.Subject.Contains(&quot;Approved&quot;) or email.Body.Contains(&quot;Approved&quot;)]" DisplayName="If - Check Approved Found" sap:VirtualizedContainerService.HintSize="519.2,1410.4" sap2010:WorkflowViewState.IdRef="If_3">
+                  <If.Then>
+                    <Sequence DisplayName="IF condition block" sap:VirtualizedContainerService.HintSize="375.2,1260.8" sap2010:WorkflowViewState.IdRef="Sequence_21">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="ui:GenericValue" Name="InvoiceNumber1" />
+                        <Variable x:TypeArguments="x:String" Name="Status" />
+                        <Variable x:TypeArguments="x:String" Name="Sender" />
+                        <Variable x:TypeArguments="x:String" Name="RecDate" />
+                        <Variable x:TypeArguments="s:DateTime" Name="RecveDate" />
+                        <Variable x:TypeArguments="s:DateTime" Name="Recve_date" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign DisplayName="Assign - Send Email" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="Assign_107">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[SenderEmail]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[email.Sender.Address.ToString]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign DisplayName="Assign - Received Date" sap:VirtualizedContainerService.HintSize="333.6,36.8" sap2010:WorkflowViewState.IdRef="Assign_108">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[ReceivedDate]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[email.Headers("Date").ToString]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign sap:VirtualizedContainerService.HintSize="333.6,36.8" sap2010:WorkflowViewState.IdRef="Assign_109">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="ui:GenericValue">[InvoiceNumber1]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="ui:GenericValue">[InvoiceNumber.Replace("/","")]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign DisplayName="Assign - Email Path" sap:VirtualizedContainerService.HintSize="333.6,36.8" sap2010:WorkflowViewState.IdRef="Assign_110">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[EmailPath]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[in_Config("DownloadEmailFolder").ToString+InvoiceNumber1.ToString+".msg"]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:SaveMail DisplayName="Save Email - In Email Folder" FilePath="[EmailPath]" sap:VirtualizedContainerService.HintSize="333.6,36.8" sap2010:WorkflowViewState.IdRef="SaveMail_2" MailMessage="[email]" />
+                      <ui:LogMessage DisplayName="Log Message - Email Downloaded" sap:VirtualizedContainerService.HintSize="333.6,36.8" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Email donwloaded into &quot;+EmailPath]" />
+                      <ui:ReplyToOutlookMailMessage Body="We have received approval" DisplayName="Reply To Outlook Mail Message" sap:VirtualizedContainerService.HintSize="333.6,36.8" sap2010:WorkflowViewState.IdRef="ReplyToOutlookMailMessage_2" MailMessage="[email]" ReplyAll="False" TimeoutMS="50000">
+                        <ui:ReplyToOutlookMailMessage.Files>
+                          <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                        </ui:ReplyToOutlookMailMessage.Files>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </ui:ReplyToOutlookMailMessage>
+                      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="333.6,36.8" sap2010:WorkflowViewState.IdRef="CommentOut_2">
+                        <ui:CommentOut.Body>
+                          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="375.2,180.8" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:MoveOutlookMessage Account="{x:Null}" DisplayName="Move Outlook Mail Message" sap:VirtualizedContainerService.HintSize="333.6,88" sap2010:WorkflowViewState.IdRef="MoveOutlookMessage_3" MailFolder="Inbox\Approved Mails\AM_Processed" MailMessage="[email]" />
+                          </Sequence>
+                        </ui:CommentOut.Body>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </ui:CommentOut>
+                      <ui:MoveMessageToFolder Domain="{x:Null}" EmailAutodiscover="{x:Null}" SharedMailbox="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Move Exchange Mail Message" ExchangeVersion="Exchange2007_SP1" sap:VirtualizedContainerService.HintSize="333.6,36.8" sap2010:WorkflowViewState.IdRef="MoveMessageToFolder_1" MailFolder="Inbox\Approved Mails\AM_Processed" MailMessage="[email]" Password="[new System.Net.NetworkCredential(string.Empty, AP_Password).Password]" Server="https://outlook.office365.com/" User="[AP_UserID]" />
+                      <ui:LogMessage DisplayName="Log Message - Approval Confirmation" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Approval Confirmation mail sent&quot;]" />
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke UpdateStatusIntoDatabase workflow" sap:VirtualizedContainerService.HintSize="333.6,88" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="UpdateStatusIntoDatabase.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_InvoiceNumber">[InvoiceNumber]</InArgument>
+                          <OutArgument x:TypeArguments="x:Int32" x:Key="out_EffectedRow" />
+                          <InArgument x:TypeArguments="x:String" x:Key="in_EmailPath">[EmailPath]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="Recieved_From">[SenderEmail]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="Recieved_date">[Recve_date.ToString]</InArgument>
+                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="In_Config">[in_Config]</InArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <Assign DisplayName="Assign - ApprovalReceived Count" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="Assign_111">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Int32">[io_ApproalReceived]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Int32">[io_ApproalReceived+1]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:LogMessage DisplayName="Log Message - Transaction Processed" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[InvoiceNumber+&quot; has been processed&quot;]" />
+                    </Sequence>
+                  </If.Then>
+                </If>
+              </Sequence>
+            </ActivityAction>
+          </ui:ForEach.Body>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </ui:ForEach>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Esclation Email Block" sap:VirtualizedContainerService.HintSize="2122.4,2808" sap2010:WorkflowViewState.IdRef="Sequence_16">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:String" Name="EmailBody" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign DisplayName="Assign - Calculate Total Days" sap:VirtualizedContainerService.HintSize="2080.8,60" sap2010:WorkflowViewState.IdRef="Assign_94">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Int32">[TotalDays]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Int32">[Convert.ToInt32((DateTime.Now-SendDate).TotalDays)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="Assign - First Esclation Days" sap:VirtualizedContainerService.HintSize="2080.8,60" sap2010:WorkflowViewState.IdRef="Assign_95">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Int32">[FirstEsclation]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Int32">[Convert.ToInt32(in_Config("FirstEsclationDays").ToString)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="Assign - Second Esclation Days" sap:VirtualizedContainerService.HintSize="2080.8,60" sap2010:WorkflowViewState.IdRef="Assign_96">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Int32">[SecondEsclation]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Int32">[Convert.ToInt32(in_Config("SecondEsclationDays").ToString)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="Assign - Third Esclation Days" sap:VirtualizedContainerService.HintSize="2080.8,60" sap2010:WorkflowViewState.IdRef="Assign_97">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Int32">[ThirdEsclation]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Int32">[Convert.ToInt32(in_Config("ThirdEsclationDays").ToString)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="Assign - Approval Pending Count" sap:VirtualizedContainerService.HintSize="2080.8,60" sap2010:WorkflowViewState.IdRef="Assign_102">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Int32">[io_ApprovalPending]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Int32">[io_ApprovalPending+1]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <If Condition="[TotalDays=FirstEsclation]" DisplayName="If - Send First Esclation Email" sap:VirtualizedContainerService.HintSize="2080.8,2215.2" sap2010:WorkflowViewState.IdRef="If_7">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="602.4,1373.6" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If Condition="[in_TransactionItem.Item(&quot;FIRST_FOLLOWUP_DATE&quot;).ToString=Nothing]" sap:VirtualizedContainerService.HintSize="560.8,1280.8" sap2010:WorkflowViewState.IdRef="If_9">
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="416.8,1131.2" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:ReadTextFile Content="[EmailBody]" DisplayName="Read Text File - First Esclation Template" FileName="[in_Config(&quot;EscalationEmail1&quot;).ToString]" sap:VirtualizedContainerService.HintSize="375.2,36.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
+                      <Assign sap:VirtualizedContainerService.HintSize="375.2,36.8" sap2010:WorkflowViewState.IdRef="Assign_113">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[Sub_line]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String" xml:space="preserve">["Esclation Level 1 -Invoice no:- "+InvoiceNumber+"  PO No:- "+PONumber+"   Needs Approval"]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign DisplayName="Assign- Subject Line" sap:VirtualizedContainerService.HintSize="375.2,36.8" sap2010:WorkflowViewState.IdRef="Assign_114">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[EmailBody]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[EmailBody.Replace("#subject#",Sub_line).ToString]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign DisplayName="Assign- Reqester ID " sap:VirtualizedContainerService.HintSize="375.2,36.8" sap2010:WorkflowViewState.IdRef="Assign_115">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[EmailBody]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[EmailBody.Replace("#Reque_ID#",in_TransactionItem("REQUESTOR_EMAIL_ID").ToString).ToString]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign DisplayName="Assign- Robot  ID " sap:VirtualizedContainerService.HintSize="375.2,36.8" sap2010:WorkflowViewState.IdRef="Assign_116">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[EmailBody]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[EmailBody.Replace("#Robot_ID#",in_Config("RobotEmailID").ToString).ToString]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:SendExchangeMail Bcc="{x:Null}" Domain="{x:Null}" EmailAutodiscover="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[EmailBody]" Cc="[in_Config(&quot;FirstEsclation_CC&quot;).ToString+&quot;;&quot;+in_Config(&quot;AP Support Mail ID&quot;).ToString]" DisplayName="Send Exchange Mail Message" ExchangeVersion="Exchange2007_SP1" sap:VirtualizedContainerService.HintSize="375.2,36.8" sap2010:WorkflowViewState.IdRef="SendExchangeMail_1" IsBodyHtml="True" IsDraft="False" Password="[new System.Net.NetworkCredential(string.Empty, AP_Password).Password]" SaveCopy="False" Server="https://outlook.office365.com/" Subject="[Sub_line]" To="[in_TransactionItem(&quot;REQUESTOR_EMAIL_ID&quot;).ToString]" User="[AP_UserID]">
+                        <ui:SendExchangeMail.Files>
+                          <InArgument x:TypeArguments="x:String">[in_TransactionItem.Item("PAGE_IMAGES").ToString]</InArgument>
+                        </ui:SendExchangeMail.Files>
+                      </ui:SendExchangeMail>
+                      <Sequence DisplayName="Update Status" sap:VirtualizedContainerService.HintSize="375.2,344.8" sap2010:WorkflowViewState.IdRef="Sequence_22">
+                        <Sequence.Variables>
+                          <Variable x:TypeArguments="ui:DatabaseConnection" Name="Db_Connect" />
+                        </Sequence.Variables>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:DatabaseConnect DatabaseConnection="[Db_Connect]" DisplayName="Connect" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="DatabaseConnect_1" ProviderName="System.Data.Odbc" ConnectionString="[&quot;Dsn=&quot;+in_Config(&quot;DSN&quot;).ToString+&quot;;uid=&quot;+in_Config(&quot;Uid&quot;).ToString+&quot;;pwd=&quot;+in_Config(&quot;Pwd&quot;).ToString+&quot;&quot;]" />
+                        <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Execute Query" ExistingDbConnection="[Db_Connect]" sap:VirtualizedContainerService.HintSize="333.6,89.6" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="[&quot;update ZZENP_AP_INVOICE_RPA_HDRS_STG set LAST_UPDATE_DATE=To_Date('&quot;+Now.ToString(&quot;dd-MM-yyyy HH:mm:ss&quot;)+&quot;','DD-MM-YYYY HH24:MI:SS'),FIRST_FOLLOWUP_DATE=To_Date('&quot;+Now.ToString(&quot;dd-MM-yyyy HH:mm:ss&quot;)+&quot;','DD-MM-YYYY HH24:MI:SS') where INVOICE_NUMBER='&quot;+InvoiceNumber+&quot;'&quot;]">
+                          <ui:ExecuteQuery.Parameters>
+                            <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                          </ui:ExecuteQuery.Parameters>
+                        </ui:ExecuteQuery>
+                        <ui:DatabaseDisconnect DatabaseConnection="[Db_Connect]" DisplayName="Disconnect" sap:VirtualizedContainerService.HintSize="333.6,22.4" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_1" />
+                      </Sequence>
+                      <ui:LogMessage DisplayName="Log Message - First Escaltion" sap:VirtualizedContainerService.HintSize="375.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;First Esclation Email has been sent for invoice number -&quot;+InvoiceNumber]" />
+                      <Assign sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_103">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Int32">[io_Esclation1]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Int32">[io_Esclation1+1]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                    </Sequence>
+                  </If.Then>
+                </If>
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <If Condition="[TotalDays=SecondEsclation]" DisplayName="If - Send Second Esclation Email" sap:VirtualizedContainerService.HintSize="1434.4,2065.6" sap2010:WorkflowViewState.IdRef="If_6">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <Sequence sap:VirtualizedContainerService.HintSize="602.4,1673.6" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If Condition="[in_TransactionItem.Item(&quot;SECOND_FOLLOWUP_DATE&quot;).ToString=Nothing]" sap:VirtualizedContainerService.HintSize="560.8,1580.8" sap2010:WorkflowViewState.IdRef="If_10">
+                      <If.Then>
+                        <Sequence sap:VirtualizedContainerService.HintSize="416.8,1431.2" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:ReadTextFile Content="[EmailBody]" DisplayName="Read Text File - Second Email Esclation Template" FileName="[in_Config(&quot;EscalationEmail2&quot;).ToString]" sap:VirtualizedContainerService.HintSize="375.2,134.4" sap2010:WorkflowViewState.IdRef="ReadTextFile_3">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:ReadTextFile>
+                          <Assign sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_117">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[Sub_line]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String" xml:space="preserve">["Esclation Level 2 -Invoice no:- "+InvoiceNumber+"  PO No:- "+PONumber+"   Needs Approval"]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Assign DisplayName="Assign- Subject Line" sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_118">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[EmailBody]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[EmailBody.Replace("#subject#",Sub_line).ToString]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Assign DisplayName="Assign- Reqester ID " sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_119">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[EmailBody]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[EmailBody.Replace("#Reque_ID#",in_Config("EsclationEmail2").ToString).ToString]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Assign DisplayName="Assign- Robot  ID " sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_120">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[EmailBody]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[EmailBody.Replace("#Robot_ID#",in_Config("RobotEmailID").ToString).ToString]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:SendExchangeMail Bcc="{x:Null}" Domain="{x:Null}" EmailAutodiscover="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[EmailBody]" Cc="[in_Config(&quot;AP Support Mail ID&quot;).ToString+&quot;;&quot;+in_Config(&quot;SecondEsclation_CC&quot;).ToString+&quot;;&quot;+in_TransactionItem(&quot;REQUESTOR_EMAIL_ID&quot;).ToString]" DisplayName="Send Exchange Mail Message" ExchangeVersion="Exchange2007_SP1" sap:VirtualizedContainerService.HintSize="375.2,146.4" sap2010:WorkflowViewState.IdRef="SendExchangeMail_2" IsBodyHtml="True" IsDraft="False" Password="[new System.Net.NetworkCredential(string.Empty, AP_Password).Password]" SaveCopy="False" Server="https://outlook.office365.com/" Subject="[Sub_line]" To="[in_Config(&quot;EsclationEmail2&quot;).ToString]" User="[AP_UserID]">
+                            <ui:SendExchangeMail.Files>
+                              <InArgument x:TypeArguments="x:String">[in_TransactionItem.Item("PAGE_IMAGES").ToString]</InArgument>
+                            </ui:SendExchangeMail.Files>
+                          </ui:SendExchangeMail>
+                          <Sequence DisplayName="Update Status" sap:VirtualizedContainerService.HintSize="375.2,344.8" sap2010:WorkflowViewState.IdRef="Sequence_23">
+                            <Sequence.Variables>
+                              <Variable x:TypeArguments="ui:DatabaseConnection" Name="Db_Connect" />
+                            </Sequence.Variables>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:DatabaseConnect DatabaseConnection="[Db_Connect]" DisplayName="Connect" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="DatabaseConnect_2" ProviderName="System.Data.Odbc" ConnectionString="[&quot;Dsn=&quot;+in_Config(&quot;DSN&quot;).ToString+&quot;;uid=&quot;+in_Config(&quot;Uid&quot;).ToString+&quot;;pwd=&quot;+in_Config(&quot;Pwd&quot;).ToString+&quot;&quot;]" />
+                            <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Execute Query" ExistingDbConnection="[Db_Connect]" sap:VirtualizedContainerService.HintSize="333.6,89.6" sap2010:WorkflowViewState.IdRef="ExecuteQuery_2" Sql="[&quot;update ZZENP_AP_INVOICE_RPA_HDRS_STG set LAST_UPDATE_DATE=To_Date('&quot;+Now.ToString(&quot;dd-MM-yyyy HH:mm:ss&quot;)+&quot;','DD-MM-YYYY HH24:MI:SS'),SECOND_FOLLOWUP_DATE=To_Date('&quot;+Now.ToString(&quot;dd-MM-yyyy HH:mm:ss&quot;)+&quot;','DD-MM-YYYY HH24:MI:SS') where INVOICE_NUMBER='&quot;+InvoiceNumber+&quot;'&quot;]">
+                              <ui:ExecuteQuery.Parameters>
+                                <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                              </ui:ExecuteQuery.Parameters>
+                            </ui:ExecuteQuery>
+                            <ui:DatabaseDisconnect DatabaseConnection="[Db_Connect]" DisplayName="Disconnect" sap:VirtualizedContainerService.HintSize="333.6,22.4" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_2" />
+                          </Sequence>
+                          <ui:LogMessage DisplayName="Log Message - Second Escaltion" sap:VirtualizedContainerService.HintSize="375.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Second Esclation Email has been sent for invoice number -&quot;+InvoiceNumber]" />
+                          <Assign sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_104">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Int32">[io_Esclation2]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Int32">[io_Esclation1+2]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                        </Sequence>
+                      </If.Then>
+                    </If>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence sap:VirtualizedContainerService.HintSize="788,1916" sap2010:WorkflowViewState.IdRef="Sequence_15">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If Condition="[TotalDays=ThirdEsclation]" DisplayName="If - Send Final Esclation Template" sap:VirtualizedContainerService.HintSize="746.4,1823.2" sap2010:WorkflowViewState.IdRef="If_5">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence sap:VirtualizedContainerService.HintSize="602.4,1673.6" sap2010:WorkflowViewState.IdRef="Sequence_19">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If Condition="[in_TransactionItem.Item(&quot;THIRD_FOLLOWUP_DATE&quot;).ToString=Nothing]" sap:VirtualizedContainerService.HintSize="560.8,1580.8" sap2010:WorkflowViewState.IdRef="If_11">
+                            <If.Then>
+                              <Sequence sap:VirtualizedContainerService.HintSize="416.8,1431.2" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:ReadTextFile Content="[EmailBody]" DisplayName="Read Text File - Final Email Esclation Template" FileName="[in_Config(&quot;EscalationEmail3&quot;).ToString]" sap:VirtualizedContainerService.HintSize="375.2,134.4" sap2010:WorkflowViewState.IdRef="ReadTextFile_4">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </ui:ReadTextFile>
+                                <Assign sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_121">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[Sub_line]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String" xml:space="preserve">["Esclation Level 3 -Invoice no:- "+InvoiceNumber+"  PO No:- "+PONumber+"   Needs Approval"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <Assign DisplayName="Assign- Subject Line" sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_122">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[EmailBody]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[EmailBody.Replace("#subject#",Sub_line).ToString]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <Assign DisplayName="Assign- Reqester ID " sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_123">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[EmailBody]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[EmailBody.Replace("#Reque_ID#",in_Config("EsclationEmail3").ToString).ToString]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <Assign DisplayName="Assign- Robot  ID " sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_124">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[EmailBody]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[EmailBody.Replace("#Robot_ID#",in_Config("RobotEmailID").ToString).ToString]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <ui:SendExchangeMail Bcc="{x:Null}" Domain="{x:Null}" EmailAutodiscover="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[EmailBody]" Cc="[in_Config(&quot;AP Support Mail ID&quot;).ToString+&quot;;&quot;+in_Config(&quot;ThirdEsclation_CC&quot;).ToString+&quot;;&quot;+in_TransactionItem(&quot;REQUESTOR_EMAIL_ID&quot;).ToString]" DisplayName="Send Exchange Mail Message" ExchangeVersion="Exchange2007_SP1" sap:VirtualizedContainerService.HintSize="375.2,146.4" sap2010:WorkflowViewState.IdRef="SendExchangeMail_3" IsBodyHtml="True" IsDraft="False" Password="[new System.Net.NetworkCredential(string.Empty, AP_Password).Password]" SaveCopy="False" Server="https://outlook.office365.com/" Subject="[&quot;Esclation Level 3 -Invoice no:- &quot;+InvoiceNumber+&quot;  PO No:- &quot;+PONumber+&quot;   Needs Approval&quot;]" To="[in_Config(&quot;EsclationEmail3&quot;).ToString]" User="[AP_UserID]">
+                                  <ui:SendExchangeMail.Files>
+                                    <InArgument x:TypeArguments="x:String">[in_TransactionItem.Item("PAGE_IMAGES").ToString]</InArgument>
+                                  </ui:SendExchangeMail.Files>
+                                </ui:SendExchangeMail>
+                                <ui:LogMessage DisplayName="Log Message - Final Esclation Escaltion" sap:VirtualizedContainerService.HintSize="375.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Final Esclation Email has been sent for invoice number -&quot;+InvoiceNumber]" />
+                                <Sequence DisplayName="Update Status" sap:VirtualizedContainerService.HintSize="375.2,344.8" sap2010:WorkflowViewState.IdRef="Sequence_24">
+                                  <Sequence.Variables>
+                                    <Variable x:TypeArguments="ui:DatabaseConnection" Name="Db_Connect" />
+                                  </Sequence.Variables>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:DatabaseConnect DatabaseConnection="[Db_Connect]" DisplayName="Connect" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="DatabaseConnect_3" ProviderName="System.Data.Odbc" ConnectionString="[&quot;Dsn=&quot;+in_Config(&quot;DSN&quot;).ToString+&quot;;uid=&quot;+in_Config(&quot;Uid&quot;).ToString+&quot;;pwd=&quot;+in_Config(&quot;Pwd&quot;).ToString+&quot;&quot;]" />
+                                  <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Execute Query" ExistingDbConnection="[Db_Connect]" sap:VirtualizedContainerService.HintSize="333.6,89.6" sap2010:WorkflowViewState.IdRef="ExecuteQuery_3" Sql="[&quot;update ZZENP_AP_INVOICE_RPA_HDRS_STG set LAST_UPDATE_DATE=To_Date('&quot;+Now.ToString(&quot;dd-MM-yyyy HH:mm:ss&quot;)+&quot;','DD-MM-YYYY HH24:MI:SS'),THIRD_FOLLOWUP_DATE=To_Date('&quot;+Now.ToString(&quot;dd-MM-yyyy HH:mm:ss&quot;)+&quot;','DD-MM-YYYY HH24:MI:SS') where INVOICE_NUMBER='&quot;+InvoiceNumber+&quot;'&quot;]">
+                                    <ui:ExecuteQuery.Parameters>
+                                      <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                                    </ui:ExecuteQuery.Parameters>
+                                  </ui:ExecuteQuery>
+                                  <ui:DatabaseDisconnect DatabaseConnection="[Db_Connect]" DisplayName="Disconnect" sap:VirtualizedContainerService.HintSize="333.6,22.4" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_3" />
+                                </Sequence>
+                                <Assign sap:VirtualizedContainerService.HintSize="375.2,60" sap2010:WorkflowViewState.IdRef="Assign_105">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Int32">[io_Esclation3]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Int32">[io_Esclation1+3]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </Sequence>
+                            </If.Then>
+                          </If>
+                        </Sequence>
+                      </If.Then>
+                    </If>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </If.Else>
+          </If>
+        </Sequence>
+      </If.Else>
+    </If>
+  </Sequence>
+</Activity>

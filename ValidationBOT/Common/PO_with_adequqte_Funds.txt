@@ -1,0 +1,43 @@
+<html>
+<body text="#1F497D">
+Hi,
+<br><br>
+Please review the attached invoice and click the "Approved" hyperlink if such services have been
+<br>
+received against this invoice. A new email window will open, then press "Send" button. Do not
+<br> 
+include additional text in the response or the invoice will not be immediately processed and will be 
+<br>
+routed to the Accounts Payable team for investigation. If you do not approve the invoice, click the
+<br>
+"Rejected" hyperlink. In the response email you can give clarification why the invoice was rejected
+<br>
+for the Accounts Payable team's investigation.
+<br><br>
+<a href="mailto:#Robot_ID#?cc=#Reque_ID#&Subject=#subject#&body=Approved" style="font-size:18px">Approved</a>   &nbsp&nbsp&nbsp&nbsp||&nbsp&nbsp&nbsp&nbsp
+<a href="mailto:#Robot_ID#?cc=#Reque_ID#&Subject=#subject#&body=Rejected" style="font-size:18px">Rejected</a>
+<br><br>
+Invoice details:<br><br>
+<table border="1" cellspacing="0" cellpadding="1" style="margin-left:50px;width:450px">
+<tr>
+	<th style="background:lightblue">Invoice Date</th>
+	<th style="background:lightblue">Invoice Number</th>
+	<th style="background:lightblue">Vendor</th>
+	<th style="background:lightblue">Amount</th>
+	<th style="background:lightblue">PO Number</th>
+</tr>
+<tr>
+	<td>#invdate#</td>
+	<td>#invnum#</td>
+	<td>#vendor#</td>
+	<td>#amount#</td>
+	<td>#ponum#</td>
+</tr>
+</table>
+<br><br>
+Note: This is an auto generated email. Please do not reply to this message. For further assistance please contact AP@enphaseenergy.com
+<br><br>
+Regards,<br>
+AP Team
+</body>
+</html>
